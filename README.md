@@ -5,7 +5,6 @@
 - [My process](#my-process)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
   - [Useful resources](#useful-resources)
 - [Author](#author)
 
@@ -26,7 +25,7 @@ This is a tool that uses openAI gpt-4 api to transforms lengthy articles  into c
 ### What I learned
 
 I learned how to implement redux and tailwind css along with react file structure and api config.
-### Continued development
+
 
 ### Useful resources
 
