@@ -9,12 +9,10 @@ const Hero = () => {
         <button onClick={()=>window.open("https://github.com/SYEDUMAIR007")} className='black_btn'>GitHub
         </button>
       </nav>
-      <h1 className='head_text'>Summarize Articles with <br />
-      <span className='orange_gradient'>OpenAI GPT-4</span>
+      <h1 className='head_text'>Welcome to summar<span className='text-aiColor'>AI</span>ze,<br /> Powered by
+      <span className='text_gradient'> OpenAI GPT-4</span>
       </h1>
-      <h2 className='desc'>Simplify your reading with Summize, an 
-      open-source article summarizer that transforms lengthy articles 
-      into clear and concise summaries
+      <h2 className='desc'>your ultimate tool for effortlessly condensing lengthy articles into concise and digestible summaries.
       </h2>
     </header>
   )

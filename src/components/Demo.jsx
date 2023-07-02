@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { copy, linkIcon, loader, tick } from "../assets";
+import { copy, linkIcon, loader, tick,dlt } from "../assets";
 import { useLazyGetSummaryQuery } from "../services/article";
 
 const Demo = () => {
@@ -53,6 +53,13 @@ const Demo = () => {
     setTimeout(() => setCopied(false), 3000);
   };
 
+  const handleRemove = (itemToRemove) => {
+    const updatedArticles = allArticles.filter((item) => item !== itemToRemove);
+    setAllArticles(updatedArticles);
+    localStorage.setItem("articles", JSON.stringify(updatedArticles));
+    setArticle({ url: "", summary: "" }); // Clear the article state
+  };
+
   const handleKeyDown = (e) => {
     if (e.keyCode === 13) {
       handleSubmit(e);
@@ -60,79 +67,84 @@ const Demo = () => {
   };
 
   return (
-    <section className='mt-16 w-full max-w-xl'>
+    <section className="mt-16 w-full max-w-xl">
       {/* Search */}
-      <div className='flex flex-col w-full gap-2'>
+      <div className="flex flex-col w-full gap-2">
         <form
-          className='relative flex justify-center items-center'
+          className="relative flex justify-center items-center"
           onSubmit={handleSubmit}
         >
           <img
             src={linkIcon}
-            alt='link-icon'
-            className='absolute left-0 my-2 ml-3 w-5'
+            alt="link-icon"
+            className="absolute left-0 my-2 ml-3 w-5"
           />
 
           <input
-            type='url'
-            placeholder='Paste the article link'
+            type="url"
+            placeholder="Paste the article link"
             value={article.url}
             onChange={(e) => setArticle({ ...article, url: e.target.value })}
             onKeyDown={handleKeyDown}
             required
-            className='url_input peer' // When you need to style an element based on the state of a sibling element, mark the sibling with the peer class, and use peer-* modifiers to style the target element
+            className="url_input"
           />
-          <button
-            type='submit'
-            className='submit_btn peer-focus:border-gray-700 peer-focus:text-gray-700 '
-          >
+          <button type="submit" className="submit_btn">
             <p>↵</p>
           </button>
         </form>
 
         {/* Browse History */}
-        <div className='flex flex-col gap-1 max-h-60 overflow-y-auto'>
+        <div className="flex flex-col gap-1 max-h-60 w-full overflow-y-auto scrollbar-none">
           {allArticles.reverse().map((item, index) => (
-            <div
-              key={`link-${index}`}
-              onClick={() => setArticle(item)}
-              className='link_card'
-            >
-              <div className='copy_btn' onClick={() => handleCopy(item.url)}>
-                <img
-                  src={copied === item.url ? tick : copy}
-                  alt={copied === item.url ? "tick_icon" : "copy_icon"}
-                  className='w-[40%] h-[40%] object-contain'
-                />
+            <div className="flex-row w-full relative" key={`link-${index}`}>
+              <div
+                className="link_card "
+                onClick={() => setArticle(item)}
+              >
+                <div className="copy_btn" onClick={() => handleCopy(item.url)}>
+                  <img
+                    src={copied === item.url ? tick : copy}
+                    alt={copied === item.url ? "tick_icon" : "copy_icon"}
+                    className="w-[40%] h-[40%] object-contain"
+                  />
+                </div>
+                <p className="font-satoshi text-aliceBlue font-medium text-sm truncate">
+                  {item.url}
+                </p>
               </div>
-              <p className='flex-1 font-satoshi text-blue-700 font-medium text-sm truncate'>
-                {item.url}
-              </p>
+              <div className="delete_btn" onClick={() => handleRemove(item)}>
+                <img src={dlt} alt="delete_button" />
+              </div>
             </div>
           ))}
         </div>
       </div>
 
       {/* Display Result */}
-      <div className='my-10 max-w-full flex justify-center items-center'>
+      <div className="my-10 max-w-full flex justify-center items-center">
         {isFetching ? (
-          <img src={loader} alt='loader' className='w-20 h-20 object-contain' />
+          <img
+            src={loader}
+            alt="loader"
+            className="w-20 h-20 object-contain"
+          />
         ) : error ? (
-          <p className='font-inter font-bold text-black text-center'>
+          <p className="font-inter font-bold text-black text-center text_gradient">
             Well, that wasn't supposed to happen...
             <br />
-            <span className='font-satoshi font-normal text-gray-700'>
+            <span className="font-satoshi font-normal text-gray-400">
               {error?.data?.error}
             </span>
           </p>
         ) : (
           article.summary && (
-            <div className='flex flex-col gap-3'>
-              <h2 className='font-satoshi font-bold text-gray-600 text-xl'>
-                Article <span className='blue_gradient'>Summary</span>
+            <div className="flex flex-col gap-3">
+              <h2 className="font-satoshi font-bold text-gray-600 text-xl">
+                Article <span className="blue_gradient">Summary</span>
               </h2>
-              <div className='summary_box'>
-                <p className='font-inter font-medium text-sm text-gray-700'>
+              <div className="summary_box">
+                <p className="font-inter font-medium text-sm text-white">
                   {article.summary}
                 </p>
               </div>
@@ -145,3 +157,5 @@ const Demo = () => {
 };
 
 export default Demo;
+
+
