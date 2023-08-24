@@ -2,7 +2,6 @@
 ## Table of contents
 
 - [Overview](#overview)
-- [My process](#my-process)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
   - [Useful resources](#useful-resources)
